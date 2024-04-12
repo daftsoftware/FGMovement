@@ -1,0 +1,35 @@
+{
+	"FileVersion" : 3,
+	"Version" : 1,
+	"FriendlyName" : "FGMovement",
+	"Description" : "Factory Game Movement Plugin.",
+	"Category" : "Gameplay",
+	"CreatedBy" : "Daft Software.",
+	"CreatedByURL" : "https://github.com/daftsoftware",
+	"EnabledByDefault" : true,
+	"CanContainContent" : true,
+	"IsBetaVersion" : false,
+	"Installed" : false,
+	"Modules" :
+	[
+		{
+			"Name" : "FGMovement",
+			"Type" : "Runtime",
+			"LoadingPhase" : "PreDefault"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "Mover",
+			"Enabled": true
+		},
+		{
+			"Name": "NetworkPrediction",
+			"Enabled": true
+		},
+		{
+			"Name": "EnhancedInput",
+			"Enabled": true
+		}
+	]
+}

@@ -1,0 +1,23 @@
+﻿// Copyright (c) 2024 Daft Software
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+#pragma once
+
+#include "MovementModeTransition.h"
+#include "FGCrouchCheck.generated.h"
+
+UCLASS()
+class FGMOVEMENT_API UFGCrouchCheck : public UBaseMovementModeTransition
+{
+	GENERATED_BODY()
+public:
+
+	virtual void OnTrigger(const FSimulationTickParams& Params) override;
+	virtual FTransitionEvalResult OnEvaluate(const FSimulationTickParams& Params) const override;
+};
