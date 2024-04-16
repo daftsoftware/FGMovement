@@ -41,14 +41,14 @@ void UFGAirMode::OnGenerateMove(const FMoverTickStartData& StartState, const FMo
 	OutProposedMove.LinearVelocity = StartingSyncState->GetVelocity_WorldSpace();
 	const float DeltaTime = TimeStep.StepMs * 0.001f;
 
-	//UFGMovementUtils::ApplyDamping(GetMoverComponent(), OutProposedMove, DeltaTime);
-
+	constexpr float TurningRateLimit = 5000.0f;
+	
 	// @TODO: This is going to break if the player isn't Z up. Works for now.
 	OutProposedMove.AngularVelocity = UMovementUtils::ComputeAngularVelocity(
 		StartingSyncState->GetOrientation_WorldSpace(),
 		CharacterInputs->GetOrientationIntentDir_WorldSpace().ToOrientationRotator(),
 		DeltaTime,
-		5000.0f);
+		TurningRateLimit);
 
 	UE_LOGFMT(LogMover, Display, "Angular Velocity: {AngVel}", *OutProposedMove.AngularVelocity.ToString());
 
@@ -56,7 +56,7 @@ void UFGAirMode::OnGenerateMove(const FMoverTickStartData& StartState, const FMo
 
 	FVector MoveInputWS = OutProposedMove.DirectionIntent.ToOrientationRotator().RotateVector(CharacterInputs->GetMoveInput());
 	
-	UFGMovementUtils::ApplyAcceleration(GetMoverComponent(), OutProposedMove, DeltaTime, MoveInputWS, FG::CVars::WalkSpeed);
+	UFGMovementUtils::ApplyAcceleration(GetMoverComponent(), OutProposedMove, DeltaTime, MoveInputWS, FG::CVars::AirSpeed);
 
 	OutProposedMove.LinearVelocity -= FVector::UpVector * FG::CVars::GravitySpeed * DeltaTime;
 

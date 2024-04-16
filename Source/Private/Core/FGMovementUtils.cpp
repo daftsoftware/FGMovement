@@ -13,6 +13,7 @@
 #include "MoveLibrary/MovementUtilsTypes.h"
 #include "MoverComponent.h"
 #include "Core/FGMoverComponent.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Logging/StructuredLog.h"
 #include "MoveLibrary/MovementUtils.h"
 
@@ -20,30 +21,11 @@
 
 void UFGMovementUtils::ApplyDamping(UMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime)
 {
-#if 1
-	
 	double Speed = Move.LinearVelocity.Size();
-
-	if(Speed < KINDA_SMALL_NUMBER)
-	{
-		return;
-	}
+	double DragFactor = UKismetMathLibrary::NormalizeToRange(FMath::Max(FG::CVars::SlipFactor, Speed), 0.0, FG::CVars::GroundSpeed);
+	double Drag = FG::CVars::GroundDamping * DragFactor;
 	
-	FVector DragForce = -FG::CVars::AirDamping * Move.LinearVelocity.GetSafeNormal() * Speed;
-	Move.LinearVelocity += DragForce * DeltaTime;
-	
-#else
-
-	double Drag = FG::CVars::AirDamping * DeltaTime;
-	double NewSpeed = Move.LinearVelocity.Size() * (1.0 - Drag);
-
-	if(NewSpeed < 0.0)
-	{
-		NewSpeed = 0.0;
-	}
-
-	Move.LinearVelocity += -Move.LinearVelocity.GetSafeNormal() * (Move.LinearVelocity.Size() - NewSpeed);
-#endif
+	Move.LinearVelocity += -Move.LinearVelocity * Drag * DeltaTime;
 }
 
 void UFGMovementUtils::ApplyAcceleration(UMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime, FVector DirectionIntent, float DesiredSpeed)

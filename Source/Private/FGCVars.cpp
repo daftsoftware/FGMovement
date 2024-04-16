@@ -20,7 +20,7 @@ namespace FG::CVars
 	
 	float JumpForce = 300.0f;
 	FAutoConsoleVariableRef CVarJumpForce(
-		TEXT("FG.Move.JumpSpeed"),
+		TEXT("FG.Move.JumpForce"),
 		JumpForce,
 		TEXT("Z Force to add on a player jump."),
 		ECVF_Default
@@ -74,11 +74,27 @@ namespace FG::CVars
     	ECVF_Default
     );
 	
-	float WalkSpeed = 1200.0f;
-	FAutoConsoleVariableRef CVarWalkSpeed(
-		TEXT("FG.Move.WalkSpeed"),
-		WalkSpeed,
+	float GroundSpeed = 1200.0f;
+	FAutoConsoleVariableRef CVarGroundSpeed(
+		TEXT("FG.Move.GroundSpeed"),
+		GroundSpeed,
 		TEXT("Constant walk speed to apply."),
+		ECVF_Default
+	);
+
+	float SlipFactor = 750.0f;
+	FAutoConsoleVariableRef CVarSlipFactor(
+		TEXT("FG.Move.SlipFactor"),
+		SlipFactor,
+		TEXT("Minimum speed threshold for slip (Drag force is scaled at this speed at minimum)."),
+		ECVF_Default
+	);
+
+	float AirSpeed = 1200.0f;
+	FAutoConsoleVariableRef CVarAirSpeed(
+		TEXT("FG.Move.AirSpeed"),
+		AirSpeed,
+		TEXT("Constant air speed to apply."),
 		ECVF_Default
 	);
 

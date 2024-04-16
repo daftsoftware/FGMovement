@@ -19,6 +19,8 @@ namespace FG::CVars
 	extern float	AirDamping;
 	extern float	GroundAcceleration;
 	extern float	AirAcceleration;
-	extern float	WalkSpeed;
+	extern float	GroundSpeed;
+	extern float	SlipFactor;
+	extern float	AirSpeed;
 	extern float	GravitySpeed;
 }
