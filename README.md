@@ -11,3 +11,4 @@ The following project config (Independent Interpolation) is currently required i
 [/Script/NetworkPrediction.NetworkPredictionSettingsObject]
 Settings=(PreferredTickingPolicy=Independent,ReplicatedManagerClassOverride=None,FixedTickFrameRate=60,bForceEngineFixTickForcePhysics=True,SimulatedProxyNetworkLOD=ForwardPredict,FixedTickInterpolationBufferedMS=100,IndependentTickInterpolationBufferedMS=100,IndependentTickInterpolationMaxBufferedMS=250,FixedTickInputSendCount=6,IndependentTickInputSendCount=6,MaximumRemoteInputFaultLimit=6)
 ```
+![image](https://github.com/daftsoftware/FGMovement/assets/9282017/69601534-a7be-4964-a175-ecc37f1f3ed9)
