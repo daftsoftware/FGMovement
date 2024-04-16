@@ -58,7 +58,7 @@ namespace FG::CVars
 		ECVF_Default
 	);
 
-	float GroundAcceleration = 6.0f;
+	float GroundAcceleration = 8.0f;
     FAutoConsoleVariableRef CVarGroundAcceleration(
     	TEXT("FG.Move.GroundAcceleration"),
     	GroundAcceleration,
@@ -66,7 +66,7 @@ namespace FG::CVars
     	ECVF_Default
     );
     
-    float AirAcceleration = 8.0f;
+    float AirAcceleration = 2.0f;
     FAutoConsoleVariableRef CVarAirAcceleration(
     	TEXT("FG.Move.AirAcceleration"),
     	AirAcceleration,

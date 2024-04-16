@@ -21,16 +21,42 @@
 
 void UFGMovementUtils::ApplyDamping(UMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime)
 {
-	double Speed = Move.LinearVelocity.Size();
-	double DragFactor = UKismetMathLibrary::NormalizeToRange(FMath::Max(FG::CVars::SlipFactor, Speed), 0.0, FG::CVars::GroundSpeed);
-	double Drag = FG::CVars::GroundDamping * DragFactor;
+	double Damper = 0.0;
+	double IntentSpeed = 0.0;
 	
-	Move.LinearVelocity += -Move.LinearVelocity * Drag * DeltaTime;
+	double Speed = Move.LinearVelocity.Size();
+	
+	if(MoverComponent->IsOnGround())
+	{
+		IntentSpeed = FG::CVars::GroundSpeed;
+		Damper = FG::CVars::GroundDamping;
+	}
+	else if(MoverComponent->IsAirborne())
+	{
+		IntentSpeed = FG::CVars::AirSpeed;
+		Damper = FG::CVars::AirDamping;
+	}
+	
+	double DragFactor = UKismetMathLibrary::NormalizeToRange(FMath::Max(FG::CVars::SlipFactor, Speed), 0.0, IntentSpeed);
+	double Drag = Damper * DragFactor; // Drag is a function of speed and the damper.
+	
+	Move.LinearVelocity += -Move.LinearVelocity * Drag * DeltaTime; // Apply counter force.
 }
 
 void UFGMovementUtils::ApplyAcceleration(UMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime, FVector DirectionIntent, float DesiredSpeed)
 {
-	const double Acceleration = DesiredSpeed * FG::CVars::AirAcceleration * DeltaTime;
+	double AccelerationConstant = 0.0;
+
+	if(MoverComponent->IsOnGround())
+	{
+		AccelerationConstant = FG::CVars::GroundAcceleration;
+	}
+	else if(MoverComponent->IsAirborne())
+	{
+		AccelerationConstant = FG::CVars::AirAcceleration;
+	}
+	
+	const double Acceleration = DesiredSpeed * AccelerationConstant * DeltaTime;
 	const FVector DesiredVelocity = DirectionIntent * DesiredSpeed;
 
 	const double ProjectedCurrentVelocity = Move.LinearVelocity | DirectionIntent;
