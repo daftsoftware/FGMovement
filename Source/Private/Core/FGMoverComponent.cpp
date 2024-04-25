@@ -96,15 +96,6 @@ void UFGMoverComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	UE_LOGFMT(LogMover, Display, "IsOnGround - {Grounded}", IsOnGround());
 }
 
-bool UFGMoverComponent::IsFalling() const
-{
-	if (bHasValidCachedState)
-	{
-		return CachedLastSyncState.MovementMode == FG::Modes::Air;
-	}
-	return false;
-}
-
 bool UFGMoverComponent::IsAirborne() const
 {
 	if (bHasValidCachedState)
@@ -119,21 +110,6 @@ bool UFGMoverComponent::IsOnGround() const
 	if (bHasValidCachedState)
 	{
 		return CachedLastSyncState.MovementMode == FG::Modes::Walk;
-	}
-
-	return false;
-}
-
-bool UFGMoverComponent::IsSlopeSliding() const
-{
-	if (IsAirborne())
-	{
-		FFloorCheckResult HitResult;
-		const UMoverBlackboard* MoverBlackboard = GetSimBlackboard();
-		if (MoverBlackboard->TryGet(CommonBlackboard::LastFloorResult, HitResult))
-		{
-			return HitResult.bBlockingHit;
-		}
 	}
 
 	return false;
