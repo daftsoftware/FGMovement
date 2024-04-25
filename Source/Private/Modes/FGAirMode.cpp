@@ -12,9 +12,9 @@
 #include "FGMovementCVars.h"
 #include "Core/FGDataModel.h"
 #include "Core/FGMovementUtils.h"
+#include "Core/FGMoverComponent.h"
 #include "FGMovementDefines.h"
 
-#include "MoverComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "MoveLibrary/MovementUtils.h"
 #include "MoveLibrary/FloorQueryUtils.h"
@@ -56,7 +56,7 @@ void UFGAirMode::OnGenerateMove(const FMoverTickStartData& StartState, const FMo
 
 	FVector MoveInputWS = OutProposedMove.DirectionIntent.ToOrientationRotator().RotateVector(CharacterInputs->GetMoveInput());
 	
-	UFGMovementUtils::ApplyAcceleration(GetMoverComponent(), OutProposedMove, DeltaTime, MoveInputWS, FG::CVars::AirSpeed);
+	UFGMovementUtils::ApplyAcceleration(CastChecked<UFGMoverComponent>(GetOuter()), OutProposedMove, DeltaTime, MoveInputWS, FG::CVars::AirSpeed);
 
 	OutProposedMove.LinearVelocity -= FVector::UpVector * FG::CVars::GravitySpeed * DeltaTime;
 

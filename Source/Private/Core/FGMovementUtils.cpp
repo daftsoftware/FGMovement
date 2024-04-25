@@ -19,7 +19,7 @@
 
 #include UE_INLINE_GENERATED_CPP_BY_NAME(FGMovementUtils)
 
-void UFGMovementUtils::ApplyDamping(UMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime)
+void UFGMovementUtils::ApplyDamping(UFGMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime)
 {
 	double Damper = 0.0;
 	double IntentSpeed = 0.0;
@@ -43,7 +43,7 @@ void UFGMovementUtils::ApplyDamping(UMoverComponent* MoverComponent, FProposedMo
 	Move.LinearVelocity += -Move.LinearVelocity * Drag * DeltaTime; // Apply counter force.
 }
 
-void UFGMovementUtils::ApplyAcceleration(UMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime, FVector DirectionIntent, float DesiredSpeed)
+void UFGMovementUtils::ApplyAcceleration(UFGMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime, FVector DirectionIntent, float DesiredSpeed)
 {
 	double AccelerationConstant = 0.0;
 

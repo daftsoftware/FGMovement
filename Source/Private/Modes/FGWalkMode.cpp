@@ -13,6 +13,7 @@
 #include "LayeredMoves/FGLayeredMove_Crouch.h"
 #include "Transitions/FGCrouchCheck.h"
 #include "FGMovementCVars.h"
+#include "Core/FGMoverComponent.h"
 #include "FGMovementDefines.h"
 
 #include "DefaultMovementSet/LayeredMoves/BasicLayeredMoves.h"
@@ -48,7 +49,7 @@ void UFGWalkMode::OnGenerateMove(const FMoverTickStartData& StartState, const FM
 	OutProposedMove.LinearVelocity = StartingSyncState->GetVelocity_WorldSpace();
 	const float DeltaTime = TimeStep.StepMs * 0.001f;
 	
-	UFGMovementUtils::ApplyDamping(GetMoverComponent(), OutProposedMove, DeltaTime);
+	UFGMovementUtils::ApplyDamping(CastChecked<UFGMoverComponent>(GetOuter()), OutProposedMove, DeltaTime);
 
 	constexpr float TurningRateLimit = 5000.0f;
 	
@@ -72,7 +73,7 @@ void UFGWalkMode::OnGenerateMove(const FMoverTickStartData& StartState, const FM
 	FVector ProjectedMove = FVector::VectorPlaneProject(MoveInputWS, FloorResult.HitResult.ImpactNormal);
 	ProjectedMove.Normalize();
 
-	UFGMovementUtils::ApplyAcceleration(GetMoverComponent(), OutProposedMove, DeltaTime, ProjectedMove, FG::CVars::GroundSpeed);
+	UFGMovementUtils::ApplyAcceleration(CastChecked<UFGMoverComponent>(GetOuter()), OutProposedMove, DeltaTime, ProjectedMove, FG::CVars::GroundSpeed);
 
     UE_LOGFMT(LogMover, Display, "Linear Velocity: {LinVel}", *OutProposedMove.LinearVelocity.ToString());
 }
@@ -108,7 +109,7 @@ void UFGWalkMode::OnSimulationTick(const FSimulationTickParams& Params, FMoverTi
 		return;
 	}
 
-	if(TryJump(CharacterInputs, OutputSyncState, OutputState))
+	if(TryJump(CharacterInputs, OutputState))
 	{
 		OutputState.MovementEndState.NextModeName = FG::Modes::Air;
 	}
@@ -184,7 +185,7 @@ void UFGWalkMode::OnSimulationTick(const FSimulationTickParams& Params, FMoverTi
 	FG::CaptureFinalState(UpdatedComponent, MoveRecord, *StartingSyncState, OutputSyncState, DeltaSeconds);
 }
 
-bool UFGWalkMode::TryJump(const FFGMoverInputCmd* InputCmd, FMoverDefaultSyncState& OutputSyncState, FMoverTickEndData& OutputState)
+bool UFGWalkMode::TryJump(const FFGMoverInputCmd* InputCmd, FMoverTickEndData& OutputState)
 {
 	const UMoverBlackboard* SimBlackboard = GetMoverComponent()->GetSimBlackboard();
 
@@ -195,7 +196,7 @@ bool UFGWalkMode::TryJump(const FFGMoverInputCmd* InputCmd, FMoverDefaultSyncSta
 
 	TSharedPtr<FLayeredMove_JumpImpulse> JumpMove = MakeShared<FLayeredMove_JumpImpulse>();
 	JumpMove->UpwardsSpeed = FG::CVars::JumpForce;
-	OutputSyncState.LayeredMoves.QueueLayeredMove(JumpMove);
+	OutputState.SyncState.LayeredMoves.QueueLayeredMove(JumpMove);
 	OutputState.MovementEndState.NextModeName = FG::Modes::Air;
 
 	return true;

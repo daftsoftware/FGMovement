@@ -27,5 +27,5 @@ public:
 	void OnSimulationTick(const FSimulationTickParams& Params, FMoverTickEndData& OutputState) override;
 	//~ End UBaseMovementMode
 
-	bool TryJump(const FFGMoverInputCmd* InputCmd, FMoverDefaultSyncState& OutputSyncState, FMoverTickEndData& OutputState);
+	bool TryJump(const FFGMoverInputCmd* InputCmd, FMoverTickEndData& OutputState);
 };
