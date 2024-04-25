@@ -49,7 +49,7 @@ void UFGWalkMode::OnGenerateMove(const FMoverTickStartData& StartState, const FM
 	OutProposedMove.LinearVelocity = StartingSyncState->GetVelocity_WorldSpace();
 	const float DeltaTime = TimeStep.StepMs * 0.001f;
 	
-	UFGMovementUtils::ApplyDamping(CastChecked<UFGMoverComponent>(GetOuter()), OutProposedMove, DeltaTime);
+	UFGMovementUtils::ApplyDamping(CastChecked<UFGMoverComponent>(GetMoverComponent()), OutProposedMove, DeltaTime);
 
 	constexpr float TurningRateLimit = 5000.0f;
 	
@@ -73,7 +73,7 @@ void UFGWalkMode::OnGenerateMove(const FMoverTickStartData& StartState, const FM
 	FVector ProjectedMove = FVector::VectorPlaneProject(MoveInputWS, FloorResult.HitResult.ImpactNormal);
 	ProjectedMove.Normalize();
 
-	UFGMovementUtils::ApplyAcceleration(CastChecked<UFGMoverComponent>(GetOuter()), OutProposedMove, DeltaTime, ProjectedMove, FG::CVars::GroundSpeed);
+	UFGMovementUtils::ApplyAcceleration(CastChecked<UFGMoverComponent>(GetMoverComponent()), OutProposedMove, DeltaTime, ProjectedMove, FG::CVars::GroundSpeed);
 
     UE_LOGFMT(LogMover, Display, "Linear Velocity: {LinVel}", *OutProposedMove.LinearVelocity.ToString());
 }
