@@ -14,7 +14,7 @@
 #include "MoveLibrary/MovementRecord.h"
 #include "FGMovementUtils.generated.h"
 
-class UMoverComponent;
+class UFGMoverComponent;
 struct FProposedMove;
 
 // @TODO: Remove or put into MovementUtils class.
@@ -72,7 +72,7 @@ public:
 	 * @param DeltaTime - Time passed since last tick.
 	 */
 	UFUNCTION(BlueprintCallable, Category = Mover)
-	static void ApplyDamping(UMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime);
+	static void ApplyDamping(UFGMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime);
 
 	/**
 	 * Project current velocity onto a direction intent, accelerating towards the
@@ -85,5 +85,5 @@ public:
 	 * @param DesiredSpeed - The speed to accelerate to.
 	 */
 	UFUNCTION(BlueprintCallable, Category = Mover)
-	static void ApplyAcceleration(UMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime, FVector DirectionIntent, float DesiredSpeed);
+	static void ApplyAcceleration(UFGMoverComponent* MoverComponent, FProposedMove& Move, float DeltaTime, FVector DirectionIntent, float DesiredSpeed);
 };

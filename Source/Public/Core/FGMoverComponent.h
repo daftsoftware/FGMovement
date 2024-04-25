@@ -24,9 +24,9 @@ public:
 	
 	//~ Begin UMoverComponent
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-	virtual bool IsFalling() const override;
-	virtual bool IsAirborne() const override;
-	virtual bool IsOnGround() const override;
-	virtual bool IsSlopeSliding() const override;
+	virtual bool IsFalling() const;
+	virtual bool IsAirborne() const;
+	virtual bool IsOnGround() const;
+	virtual bool IsSlopeSliding() const;
 	//~ End UMoverComponent
 };

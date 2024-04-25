@@ -98,37 +98,29 @@ void UFGMoverComponent::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 
 bool UFGMoverComponent::IsFalling() const
 {
-	if(bHasValidCachedState)
+	if (bHasValidCachedState)
 	{
-		if(const FMoverDefaultSyncState* SyncState = CachedLastSyncState.SyncStateCollection.FindDataByType<FMoverDefaultSyncState>())
-		{
-			return SyncState->MovementMode == FG::Modes::Air;
-		}
+		return CachedLastSyncState.MovementMode == FG::Modes::Air;
 	}
 	return false;
 }
 
 bool UFGMoverComponent::IsAirborne() const
 {
-	if(bHasValidCachedState)
+	if (bHasValidCachedState)
 	{
-		if(const FMoverDefaultSyncState* SyncState = CachedLastSyncState.SyncStateCollection.FindDataByType<FMoverDefaultSyncState>())
-		{
-			return SyncState->MovementMode == FG::Modes::Air;
-		}
+		return CachedLastSyncState.MovementMode == FG::Modes::Air;
 	}
 	return false;
 }
 
 bool UFGMoverComponent::IsOnGround() const
 {
-	if(bHasValidCachedState)
+	if (bHasValidCachedState)
 	{
-		if(const FMoverDefaultSyncState* SyncState = CachedLastSyncState.SyncStateCollection.FindDataByType<FMoverDefaultSyncState>())
-		{
-			return SyncState->MovementMode == FG::Modes::Walk;
-		}
+		return CachedLastSyncState.MovementMode == FG::Modes::Walk;
 	}
+
 	return false;
 }
 
@@ -137,10 +129,12 @@ bool UFGMoverComponent::IsSlopeSliding() const
 	if (IsAirborne())
 	{
 		FFloorCheckResult HitResult;
-		if (GetSimBlackboard()->TryGet(CommonBlackboard::LastFloorResult, HitResult))
+		const UMoverBlackboard* MoverBlackboard = GetSimBlackboard();
+		if (MoverBlackboard->TryGet(CommonBlackboard::LastFloorResult, HitResult))
 		{
 			return HitResult.bBlockingHit;
 		}
 	}
+
 	return false;
 }
