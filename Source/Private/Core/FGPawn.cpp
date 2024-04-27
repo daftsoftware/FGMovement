@@ -20,6 +20,8 @@
 
 AFGPawn::AFGPawn()
 {
+	SetReplicatedMovement(false);
+	
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
 	CapsuleComponent->SetHiddenInGame(false);
 	CapsuleComponent->SetCollisionProfileName(UCollisionProfile::Pawn_ProfileName);
