@@ -40,8 +40,8 @@ public:
 	virtual void Look(const FInputActionValue& Value);
 	virtual void Jump();
 	virtual void JumpCompleted();
-	virtual void Duck();
-	virtual void DuckCompleted();
+	virtual void Crouch();
+	virtual void CrouchCompleted();
 
 	//~ Begin IMoverInputProducerInterface
 	virtual void ProduceInput_Implementation(int32 SimTimeMs, FMoverInputCmdContext& OutInputCmd) override;

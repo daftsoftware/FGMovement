@@ -20,7 +20,7 @@
 
 AFGPawn::AFGPawn()
 {
-	SetReplicatedMovement(false);
+	SetReplicateMovement(false);
 	
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
 	CapsuleComponent->SetHiddenInGame(false);
@@ -82,12 +82,12 @@ void AFGPawn::JumpCompleted()
 	JumpButtonDown = false;
 }
 
-void AFGPawn::Duck()
+void AFGPawn::Crouch()
 {
 	CrouchButtonDown = true;
 }
 
-void AFGPawn::DuckCompleted()
+void AFGPawn::CrouchCompleted()
 {
 	CrouchButtonDown = false;
 }

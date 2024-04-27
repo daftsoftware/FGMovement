@@ -36,8 +36,8 @@ void AFGExamplePawn::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 		EIC->BindAction(JumpAction, ETriggerEvent::Completed, this, &ThisClass::JumpCompleted);
 
 		const UInputAction* DuckAction = AssetData->InputActionCrouch.LoadSynchronous();
-		EIC->BindAction(DuckAction, ETriggerEvent::Triggered, this, &ThisClass::Duck);
-		EIC->BindAction(DuckAction, ETriggerEvent::Completed, this, &ThisClass::DuckCompleted);
+		EIC->BindAction(DuckAction, ETriggerEvent::Triggered, this, &ThisClass::Crouch);
+		EIC->BindAction(DuckAction, ETriggerEvent::Completed, this, &ThisClass::CrouchCompleted);
 	}
 }
 
