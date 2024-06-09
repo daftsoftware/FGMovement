@@ -69,7 +69,7 @@ void UFGAirMode::OnGenerateMove(const FMoverTickStartData& StartState, const FMo
  * happened in that time, aggregate them together using the MovementRecord, and then apply the
  * moves to the Pawn. This is where we actually see the moves from OnGenerateMove happen.
  * 
- * @param Params - Holds the lat
+ * @param Params - The parameters for the tick.
  * @param OutputState - The final state of the mover after the tick.
  */
 void UFGAirMode::OnSimulationTick(const FSimulationTickParams& Params, FMoverTickEndData& OutputState)
@@ -79,7 +79,6 @@ void UFGAirMode::OnSimulationTick(const FSimulationTickParams& Params, FMoverTic
 	UPrimitiveComponent* UpdatedPrimitive = Params.UpdatedPrimitive;
 	FProposedMove ProposedMove = Params.ProposedMove;
 
-	const FFGMoverInputCmd* CharacterInputs = StartState.InputCmd.InputCollection.FindDataByType<FFGMoverInputCmd>();
 	const FMoverDefaultSyncState* StartingSyncState = StartState.SyncState.SyncStateCollection.FindDataByType<FMoverDefaultSyncState>();
 	check(StartingSyncState);
 

@@ -67,7 +67,6 @@ void UFGWalkMode::OnGenerateMove(const FMoverTickStartData& StartState, const FM
 	FFloorCheckResult FloorResult;
 	GetMoverComponent()->GetSimBlackboard()->TryGet(CommonBlackboard::LastFloorResult, FloorResult);
 
-	// @TODO: Here we should probably just use GetMoveInput_WorldSpace() - but it seems currently not rotating the input.
 	FVector MoveInputWS = OutProposedMove.DirectionIntent.ToOrientationRotator().RotateVector(CharacterInputs->GetMoveInput());
 
 	FVector ProjectedMove = FVector::VectorPlaneProject(MoveInputWS, FloorResult.HitResult.ImpactNormal);
@@ -84,7 +83,7 @@ void UFGWalkMode::OnGenerateMove(const FMoverTickStartData& StartState, const FM
  * happened in that time, aggregate them together using the MovementRecord, and then apply the
  * moves to the Pawn. This is where we actually see the moves from OnGenerateMove happen.
  * 
- * @param Params - Holds the lat
+ * @param Params - Input parameters for the movement tick.
  * @param OutputState - The final state of the mover after the tick.
  */
 void UFGWalkMode::OnSimulationTick(const FSimulationTickParams& Params, FMoverTickEndData& OutputState)
@@ -157,9 +156,6 @@ void UFGWalkMode::OnSimulationTick(const FSimulationTickParams& Params, FMoverTi
 
 	if (NewFloor.bWalkableFloor && UpdatedPrimitive)
 	{
-		// Don't use UAirMovementUtils::IsValidLandingSpot here - uses FindFloor and other CMC
-		// bad juju that we had to previously work around.
-
 		// @TODO: Stinky forward port from NPP implementation - Fix me.
 		// In the NPP implementation we did a really dirty hack and basically just bodged the
 		// slide vector to the expected travel distance. This means when you run into a wall
@@ -187,8 +183,6 @@ void UFGWalkMode::OnSimulationTick(const FSimulationTickParams& Params, FMoverTi
 
 bool UFGWalkMode::TryJump(const FFGMoverInputCmd* InputCmd, FMoverTickEndData& OutputState)
 {
-	const UMoverBlackboard* SimBlackboard = GetMoverComponent()->GetSimBlackboard();
-
 	if(!InputCmd->bIsJumpPressed)
 	{
 		return false;

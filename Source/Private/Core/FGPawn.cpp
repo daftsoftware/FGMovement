@@ -66,8 +66,6 @@ void AFGPawn::Look(const FInputActionValue& Value)
 {
 	const FVector2D LookVector = Value.Get<FVector2D>();
 
-	// @TODO: Base impl is clamping here, why?
-	// @TODO: Why duplicating turn and look input?
 	CachedLookInput.Yaw = CachedTurnInput.Yaw = LookVector.X;
 	CachedLookInput.Pitch = CachedTurnInput.Pitch = LookVector.Y;
 }
