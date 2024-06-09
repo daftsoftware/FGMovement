@@ -20,7 +20,7 @@
 
 AFGPawn::AFGPawn()
 {
-	SetReplicateMovement(false);
+	SetReplicatingMovement(false);
 	
 	CapsuleComponent = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CapsuleComponent"));
 	CapsuleComponent->SetHiddenInGame(false);
